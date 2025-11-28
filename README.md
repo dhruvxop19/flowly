@@ -2,8 +2,6 @@
 
 A web-based tool for generating mathematical animations using Manim, Flask, and OpenAI. Create beautiful mathematical visualizations with simple text prompts.
 
-[![manim video generator](https://img.youtube.com/vi/rIltjjzxsGQ/0.jpg)](https://www.youtube.com/watch?v=rIltjjzxsGQ)
-# [Detailed Step-by-Step Guide available here](https://sevalla.com/blog/guide-to-building-an-ai-powered-mathematical-animation-generator)
 
 ## 🌟 Features
 
@@ -18,8 +16,7 @@ A web-based tool for generating mathematical animations using Manim, Flask, and 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/rohitg00/manim-video-generator.git
-cd manim-video-generator
+git clone
 ```
 
 2. Install dependencies:
@@ -105,11 +102,9 @@ These examples showcase the power of our tool in creating complex mathematical v
 
 ## 🤝 Credits
 
-- Created by [Rohit Ghumare](https://github.com/rohitg00)
 - Powered by [Manim Community](https://www.manim.community/)
 - Special thanks to:
   - [3Blue1Brown](https://www.3blue1brown.com/) for creating Manim
-  - [Sevalla](https://sevalla.com/) for support and inspiration
   - The Manim Community for their excellent documentation and support
 
 ## 📄 License
@@ -161,9 +156,8 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 ## 📞 Support
 
 If you encounter any issues or have questions, please:
-1. Check the [Common Issues](#-common-issues--solutions) section
-2. Search existing GitHub issues
-3. Create a new issue if needed
+1. Search existing GitHub issues
+2. Create a new issue if needed
 
 ---
 
