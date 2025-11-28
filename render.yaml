@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: flowly
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: RENDER_QUALITY
+        value: low
+    healthCheckPath: /
