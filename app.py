@@ -216,6 +216,14 @@ def select_template(concept):
         'differential_equation': {
             'keywords': ['differential equation', 'ode', 'pde'],
             'generator': generate_diff_eq_code
+        },
+        'bernoulli': {
+            'keywords': ['bernoulli', 'fluid', 'pressure', 'velocity', 'pipe', 'flow'],
+            'generator': generate_bernoulli_code
+        },
+        'matrix_exponentiation': {
+            'keywords': ['matrix exponentiation', '4x4 matrix', 'matrix power', 'matrix exp'],
+            'generator': generate_matrix_exp_code
         }
     }
     
@@ -945,6 +953,127 @@ class MainScene(ThreeDScene):
         self.stop_ambient_camera_rotation()
         self.wait()'''
 
+def generate_bernoulli_code():
+    return '''from manim import *
+
+class MainScene(Scene):
+    def construct(self):
+        # Title
+        title = Text("Bernoulli's Principle", font_size=40).to_edge(UP)
+        self.play(Write(title))
+        
+        # Create pipe with varying width
+        pipe_top = VMobject()
+        pipe_top.set_points_smoothly([
+            [-5, 1, 0], [-2, 1, 0], [-1, 0.4, 0], [1, 0.4, 0], [2, 1, 0], [5, 1, 0]
+        ])
+        pipe_bottom = VMobject()
+        pipe_bottom.set_points_smoothly([
+            [-5, -1, 0], [-2, -1, 0], [-1, -0.4, 0], [1, -0.4, 0], [2, -1, 0], [5, -1, 0]
+        ])
+        pipe_top.set_color(BLUE)
+        pipe_bottom.set_color(BLUE)
+        
+        self.play(Create(pipe_top), Create(pipe_bottom))
+        
+        # Labels for wide and narrow sections
+        wide_label = Text("Wide Section", font_size=24).move_to([-3.5, -1.8, 0])
+        narrow_label = Text("Narrow Section", font_size=24).move_to([0, -1.5, 0])
+        self.play(Write(wide_label), Write(narrow_label))
+        
+        # Velocity arrows
+        v1_arrow = Arrow([-4, 0, 0], [-3, 0, 0], color=GREEN, buff=0)
+        v1_label = Text("v1 (slow)", font_size=20, color=GREEN).next_to(v1_arrow, UP)
+        
+        v2_arrow = Arrow([-0.5, 0, 0], [0.8, 0, 0], color=RED, buff=0)
+        v2_label = Text("v2 (fast)", font_size=20, color=RED).next_to(v2_arrow, UP)
+        
+        self.play(Create(v1_arrow), Write(v1_label))
+        self.play(Create(v2_arrow), Write(v2_label))
+        
+        # Pressure indicators
+        p1_text = Text("P1 (high)", font_size=20, color=YELLOW).move_to([-3.5, 1.5, 0])
+        p2_text = Text("P2 (low)", font_size=20, color=ORANGE).move_to([0, 1.2, 0])
+        self.play(Write(p1_text), Write(p2_text))
+        
+        # Bernoulli equation
+        equation = Text("P1 + (1/2)pv1^2 = P2 + (1/2)pv2^2", font_size=28)
+        equation.to_edge(DOWN)
+        box = SurroundingRectangle(equation, color=WHITE, buff=0.2)
+        self.play(Write(equation), Create(box))
+        
+        # Animate fluid particles
+        for _ in range(3):
+            particle = Dot([-5, 0, 0], color=BLUE_A, radius=0.1)
+            path = VMobject()
+            path.set_points_smoothly([
+                [-5, 0, 0], [-2, 0, 0], [-1, 0, 0], [1, 0, 0], [2, 0, 0], [5, 0, 0]
+            ])
+            self.play(MoveAlongPath(particle, path), run_time=2, rate_func=linear)
+            self.remove(particle)
+        
+        self.wait()'''
+
+def generate_matrix_exp_code():
+    return '''from manim import *
+import numpy as np
+
+class MainScene(Scene):
+    def construct(self):
+        # Title
+        title = Text("4x4 Matrix Exponentiation", font_size=36).to_edge(UP)
+        self.play(Write(title))
+        
+        # Create 4x4 matrix A
+        matrix_a = Matrix([
+            ["1", "2", "0", "1"],
+            ["0", "1", "1", "0"],
+            ["1", "0", "1", "2"],
+            ["0", "1", "0", "1"]
+        ], left_bracket="[", right_bracket="]").scale(0.6)
+        
+        a_label = Text("A = ", font_size=28).next_to(matrix_a, LEFT)
+        matrix_group = VGroup(a_label, matrix_a).move_to([-3, 0.5, 0])
+        
+        self.play(Write(a_label), Create(matrix_a))
+        self.wait()
+        
+        # Show exponentiation concept
+        exp_text = Text("Matrix Exponentiation: A^n", font_size=28).move_to([2.5, 1.5, 0])
+        self.play(Write(exp_text))
+        
+        # Show A^2 = A * A
+        a_squared = Text("A^2 = A x A", font_size=24).move_to([2.5, 0.5, 0])
+        self.play(Write(a_squared))
+        
+        # Result matrix for A^2
+        result_matrix = Matrix([
+            ["2", "5", "2", "3"],
+            ["1", "1", "2", "2"],
+            ["2", "4", "1", "5"],
+            ["0", "2", "1", "1"]
+        ], left_bracket="[", right_bracket="]").scale(0.5)
+        
+        result_label = Text("A^2 = ", font_size=24).next_to(result_matrix, LEFT)
+        result_group = VGroup(result_label, result_matrix).move_to([2.5, -1.2, 0])
+        
+        self.play(Write(result_label), Create(result_matrix))
+        
+        # Show formula for matrix exponentiation
+        formula = Text("A^n = A x A x ... x A (n times)", font_size=22)
+        formula.to_edge(DOWN)
+        self.play(Write(formula))
+        
+        # Highlight applications
+        apps_title = Text("Applications:", font_size=24, color=YELLOW).move_to([-3, -1.5, 0])
+        app1 = Text("- Graph path counting", font_size=20).move_to([-3, -2, 0])
+        app2 = Text("- Fibonacci numbers", font_size=20).move_to([-3, -2.5, 0])
+        
+        self.play(Write(apps_title))
+        self.play(Write(app1), Write(app2))
+        
+        self.wait(2)'''
+
 def generate_manim_code(concept):
     """Generate Manim code based on the concept."""
     try:
@@ -1050,7 +1179,7 @@ def generate():
             
             # Write code to temporary file
             code_file = os.path.join(temp_dir, 'scene.py')
-            with open(code_file, 'w') as f:
+            with open(code_file, 'w', encoding='utf-8') as f:
                 f.write(manim_code)
             
             # Create media directory
